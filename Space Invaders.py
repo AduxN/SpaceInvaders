@@ -7,16 +7,16 @@ pygame.init()
 
 # Initializing
 screen = pygame.display.set_mode((800, 600))
-mixer.music.load("background.wav")
+mixer.music.load("sound/background.wav")
 mixer.music.play(-1)
 mixer.music.set_volume(0.2)
 # Title and icon
 pygame.display.set_caption("Space Invaders")
-icon = pygame.image.load('spaceship.png')
+icon = pygame.image.load('img/spaceship.png')
 pygame.display.set_icon(icon)
 
 # Player
-player_img = pygame.image.load('player.png')
+player_img = pygame.image.load('img/player.png')
 player_x = 370
 player_y = 480
 player_x_change = 0
@@ -55,7 +55,7 @@ enemy_x_change = []
 enemy_y_change = []
 enemies = 2
 for i in range(enemies):
-    enemy_img.append(pygame.image.load('enemy.png'))
+    enemy_img.append(pygame.image.load('img/enemy.png'))
     enemy_x.append(randint(0, 735))
     enemy_y.append(randint(50, 150))
     enemy_x_change.append(2)
@@ -67,7 +67,7 @@ def enemy(x, y, q):
 
 
 # Bullet
-bullet_img = pygame.image.load('bullet.png')
+bullet_img = pygame.image.load('img/bullet.png')
 bullet_x = 0
 bullet_y = 480
 bullet_x_change = 10
@@ -92,7 +92,7 @@ def is_collision(en_x, en_y, bul_x, bul_y):
 running = True
 while running:
     # Background
-    screen.blit(pygame.image.load("bg.jpg"), (0, 0))
+    screen.blit(pygame.image.load("img/bg.jpg"), (0, 0))
 
     for event in pygame.event.get():
 
@@ -111,8 +111,8 @@ while running:
             if event.key == pygame.K_s:
                 player_y_change = speed
             if event.key == pygame.K_SPACE:
-                if bullet_state is "ready":
-                    bullet_sound = mixer.Sound("laser.wav")
+                if bullet_state == "ready":
+                    bullet_sound = mixer.Sound("sound/laser.wav")
                     bullet_sound.play()
                     bullet_sound.set_volume(0.4)
                     bullet_x = player_x+8
@@ -135,7 +135,7 @@ while running:
         bullet_y = 480
         bullet_state = "ready"
 
-    if bullet_state is "fire":
+    if bullet_state == "fire":
         fire_bullet(bullet_x, bullet_y)
         bullet_y -= bullet_y_change
 
@@ -169,7 +169,7 @@ while running:
         # Collision
         collision = is_collision(enemy_x[i], enemy_y[i], bullet_x, bullet_y)
         if collision:
-            explosion_sound = mixer.Sound("explosion.wav")
+            explosion_sound = mixer.Sound("sound/explosion.wav")
             explosion_sound.set_volume(0.3)
             explosion_sound.play()
             bullet_y = 480
